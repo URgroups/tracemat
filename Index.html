@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NumTrace - Advanced Phone Number Location Tracker | Find Any Number</title>
+    <meta name="description" content="Track any phone number location with precision. Get real-time location data, carrier info, and caller identification with our advanced tracking technology.">
+    <meta name="keywords" content="phone tracker, number location, phone lookup, location finder, mobile tracker, caller ID">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --success: #4cc9f0;
+            --card-bg: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+            --transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            --primary: #4895ef;
+            --primary-dark: #3a7bc8;
+            --secondary: #b5179e;
+            --accent: #f72585;
+            --light: #121212;
+            --dark: #f8f9fa;
+            --gray: #a0a0a0;
+            --card-bg: #1e1e1e;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .logo h1 {
+            color: var(--primary);
+            font-size: 26px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 16px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary);
+            transform: rotate(30deg);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f5f7ff 0%, #eef1ff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark-mode .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(114, 9, 183, 0.1) 100%);
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 20px 25px;
+            border: none;
+            border-radius: 50px;
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            font-size: 16px;
+            transition: var(--transition);
+            padding-right: 180px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 10px 30px rgba(67, 97, 238, 0.2);
+        }
+
+        .search-button {
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-button:hover {
+            transform: translateX(3px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 30px;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .hero-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .phone-mockup {
+            width: 300px;
+            height: 600px;
+            background: var(--card-bg);
+            border-radius: 40px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            border: 10px solid var(--dark);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 30px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .phone-header {
+            display: flex;
+            justify-content: space-between;
+            color: white;
+            font-size: 12px;
+        }
+
+        .map-display {
+            flex: 1;
+            background: #2d3748;
+            border-radius: 15px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .phone-footer {
+            display: flex;
+            justify-content: space-around;
+            color: white;
+            font-size: 12px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background-color: var(--light);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 40px 30px;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            color: white;
+            font-size: 32px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-size: 1.5rem;
+        }
+
+        .feature-card p {
+            color: var(--gray);
+        }
+
+        /* Ad Section */
+        .ad-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ad-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .ad-section::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .ad-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ad-container h3 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .ad-container p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .ad-button {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary);
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .ad-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 100px 0;
+            background-color: var(--light);
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0 auto 25px;
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+        }
+
+        .step h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-size: 1.4rem;
+        }
+
+        .step p {
+            color: var(--gray);
+        }
+
+        /* Results Section */
+        .results {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f5f7ff 0%, #eef1ff 100%);
+        }
+
+        .dark-mode .results {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .result-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: var(--shadow);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .result-title {
+            font-size: 1.8rem;
+            color: var(--dark);
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .result-action {
+            background: var(--light);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            color: var(--dark);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .result-action:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .result-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .result-value {
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+
+        .map-container {
+            height: 300px;
+            background: var(--light);
+            border-radius: var(--radius);
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(114, 9, 183, 0.1) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 100px 0;
+            background-color: var(--light);
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background: var(--card-bg);
+            transition: var(--transition);
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-question {
+            background-color: var(--card-bg);
+            padding: 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .faq-question:hover {
+            color: var(--primary);
+        }
+
+        .faq-answer {
+            background-color: var(--card-bg);
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s, padding 0.3s;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 25px 25px;
+            max-height: 500px;
+        }
+
+        .faq-icon {
+            transition: var(--transition);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--card-bg);
+            color: var(--dark);
+            padding: 80px 0 30px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            color: var(--dark);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-text h2 {
+                font-size: 2.8rem;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-text h2 {
+                font-size: 2.2rem;
+            }
+
+            .search-input {
+                padding-right: 25px;
+            }
+
+            .search-button {
+                position: relative;
+                width: 100%;
+                margin-top: 15px;
+                justify-content: center;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .steps {
+                flex-direction: column;
+            }
+
+            .step {
+                margin-bottom: 40px;
+            }
+        }
+
+        /* Animation for elements */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h1>NumTrace</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#results">Results</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <a href="#" class="cta-button">
+                        <i class="fas fa-search-location"></i>
+                        Track Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2 class="animate">Find Any Phone Number Location Instantly</h2>
+                    <p class="animate delay-1">Our advanced tracking technology provides accurate location data, carrier information, and caller identification for any phone number worldwide.</p>
+                    <div class="search-container animate delay-2">
+                        <input type="text" class="search-input" placeholder="Enter phone number with country code (e.g. +1234567890)">
+                        <button class="search-button">
+                            <i class="fas fa-search-location"></i>
+                            Track Number
+                        </button>
+                    </div>
+                    <div class="hero-stats animate delay-3">
+                        <div class="stat">
+                            <div class="stat-value">5M+</div>
+                            <div class="stat-label">Numbers Tracked</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">190+</div>
+                            <div class="stat-label">Countries</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">99.8%</div>
+                            <div class="stat-label">Accuracy</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="phone-mockup animate delay-2">
+                        <div class="phone-screen">
+                            <div class="phone-header">
+                                <span>9:41</span>
+                                <span><i class="fas fa-signal"></i> <i class="fas fa-wifi"></i> <i class="fas fa-battery-full"></i></span>
+                            </div>
+                            <div class="map-display">
+                                <i class="fas fa-map-marker-alt" style="font-size: 48px; color: #f72585;"></i>
+                                <div style="text-align: center; margin-top: 10px;">
+                                    <div>Location Found</div>
+                                    <div style="font-size: 12px; margin-top: 5px;">New York, NY</div>
+                                </div>
+                            </div>
+                            <div class="phone-footer">
+                                <div><i class="fas fa-user"></i></div>
+                                <div><i class="fas fa-compass"></i></div>
+                                <div><i class="fas fa-map"></i></div>
+                                <div><i class="fas fa-cog"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose NumTrace?</h2>
+                <p>Our advanced phone tracking technology provides accurate and reliable results with these powerful features</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card animate">
+                    <div class="feature-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Pinpoint Accuracy</h3>
+                    <p>Get precise location data with detailed maps and coordinates for any phone number with accuracy up to 10 meters.</p>
+                </div>
+                <div class="feature-card animate delay-1">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Lightning Fast</h3>
+                    <p>Our system processes requests in seconds, delivering instant tracking results without delays.</p>
+                </div>
+                <div class="feature-card animate delay-2">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure & Private</h3>
+                    <p>Your searches are completely confidential and we don't store any personal data. Your privacy is our priority.</p>
+                </div>
+                <div class="feature-card animate delay-3">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <h3>Global Coverage</h3>
+                    <p>Track phone numbers from any country with our worldwide database covering 190+ countries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ad Section -->
+    <section class="ad-section">
+        <div class="container">
+            <div class="ad-container">
+                <h3>Upgrade to Premium for Advanced Features!</h3>
+                <p>Get detailed caller information, history tracking, real-time location updates, and priority support with our premium plan.</p>
+                <a href="#" class="ad-button">Get Premium Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>How NumTrace Works</h2>
+                <p>Track any phone number in just three simple steps</p>
+            </div>
+            <div class="steps">
+                <div class="step animate">
+                    <div class="step-number">1</div>
+                    <h3>Enter Phone Number</h3>
+                    <p>Input the phone number you want to track with the country code in our search box.</p>
+                </div>
+                <div class="step animate delay-1">
+                    <div class="step-number">2</div>
+                    <h3>Advanced Analysis</h3>
+                    <p>Our system analyzes the number using multiple databases and location services.</p>
+                </div>
+                <div class="step animate delay-2">
+                    <div class="step-number">3</div>
+                    <h3>View Detailed Results</h3>
+                    <p>Get comprehensive information including location, carrier, timezone, and more.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results" id="results">
+        <div class="container">
+            <div class="section-title">
+                <h2>Sample Tracking Results</h2>
+                <p>See what information you can get from our advanced phone tracking service</p>
+            </div>
+            <div class="result-card animate">
+                <div class="result-header">
+                    <h3 class="result-title">Tracking Results</h3>
+                    <div class="result-actions">
+                        <button class="result-action">
+                            <i class="fas fa-download"></i>
+                            Export
+                        </button>
+                        <button class="result-action">
+                            <i class="fas fa-share-alt"></i>
+                            Share
+                        </button>
+                    </div>
+                </div>
+                <div class="result-grid">
+                    <div class="result-item">
+                        <span class="result-label">Phone Number</span>
+                        <span class="result-value">+1 (555) 123-4567</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Country</span>
+                        <span class="result-value">United States</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Carrier</span>
+                        <span class="result-value">Verizon Wireless</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Location</span>
+                        <span class="result-value">New York, NY 10001</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Time Zone</span>
+                        <span class="result-value">Eastern Time (ET) UTC-5</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Number Status</span>
+                        <span class="result-value">Active</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Number Type</span>
+                        <span class="result-value">Mobile</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Caller ID</span>
+                        <span class="result-value">John Smith</span>
+                    </div>
+                </div>
+                <div class="map-container">
+                    <div class="map-overlay">
+                        <div style="text-align: center;">
+                            <i class="fas fa-map-marked-alt" style="font-size: 48px; margin-bottom: 15px;"></i>
+                            <div>Interactive Map Display</div>
+                            <div style="font-size: 14px; margin-top: 10px;">Exact location would be shown here</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>Find answers to common questions about our phone tracking service</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item animate">
+                    <div class="faq-question">
+                        <span>Is phone number tracking legal?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, our service is completely legal when used for legitimate purposes such as identifying unknown callers or verifying business contacts. We comply with all privacy laws and regulations and only provide information that is publicly available or obtained through legal means.</p>
+                    </div>
+                </div>
+                <div class="faq-item animate delay-1">
+                    <div class="faq-question">
+                        <span>How accurate is the location data?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our location data is highly accurate, typically providing location information within a few hundred meters for mobile numbers. For landline numbers, we can pinpoint the registered address. Accuracy may vary depending on the carrier, available data, and whether the number is mobile or landline.</p>
+                    </div>
+                </div>
+                <div class="faq-item animate delay-2">
+                    <div class="faq-question">
+                        <span>Can I track any phone number in the world?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, our service works with phone numbers from most countries worldwide. However, the amount of available information may vary by country and carrier due to different regulations and data availability. We currently support tracking in 190+ countries with continuous expansion.</p>
+                    </div>
+                </div>
+                <div class="faq-item animate delay-3">
+                    <div class="faq-question">
+                        <span>Is my search history stored?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No, we value your privacy. We do not store any personal information or search history. All tracking requests are processed anonymously, and we have a strict no-logs policy to ensure your searches remain completely private and confidential.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>NumTrace</h3>
+                    <p>The most reliable phone number tracking service with global coverage and accurate results. Trusted by millions worldwide.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#results">Sample Results</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Disclaimer</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><a href="mailto:support@numtrace.com">support@numtrace.com</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Live Chat</a></li>
+                        <li><a href="#">Report Abuse</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 NumTrace. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // FAQ functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentNode;
+                item.classList.toggle('active');
+            });
+        });
+        
+        // Search functionality
+        document.querySelector('.search-button').addEventListener('click', () => {
+            const phoneNumber = document.querySelector('.search-input').value;
+            if (phoneNumber.trim() === '') {
+                alert('Please enter a phone number');
+                return;
+            }
+            
+            // In a real implementation, this would make an API call
+            alert(`Tracking phone number: ${phoneNumber}\n\nIn a real implementation, this would display tracking results.`);
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.feature-card, .step, .result-card, .faq-item').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
